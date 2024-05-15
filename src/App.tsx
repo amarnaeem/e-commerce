@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useContext } from 'react';
 import './App.css';
 import { AppContext } from '../src/AppContext/Context';
 import Router from './Routes';

@@ -43,7 +43,9 @@ export const useAppContext = () => useContext(AppContext);
 
 export default function Context({ children }: { children: ReactNode }): JSX.Element {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [cart, setCart] = useState<Product[]>(localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : []);
+  const initialCart: Product[] = JSON.parse(localStorage.getItem('cartItems') ?? '[]');
+  const [cart, setCart] = useState<Product[]>(initialCart);
+  // const [cart, setCart] = useState<Product[]>(localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : []);
   const [open, setOpen] = useState<boolean>(false); 
 
   const showDrawer = useCallback(() => { 
@@ -76,7 +78,7 @@ export default function Context({ children }: { children: ReactNode }): JSX.Elem
   const decrementProduct = useCallback((item: Product) => {
     setCart(prevCart => {
       const isItemInCart = prevCart.find((cartItem) => cartItem.id === item.id);
-      if (isItemInCart.quantity === 1) {
+      if (isItemInCart?.quantity === 1) {
         return prevCart.filter((cartItem) => cartItem.id !== item.id);
       } else {
         return prevCart.map((cartItem) =>
